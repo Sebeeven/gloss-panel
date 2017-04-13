@@ -1,4 +1,4 @@
-(function($, Backbone) {
+(function($, Backbone, _, app) {
     var Workspace = Backbone.Router.extend({
         routes: {
             '': 'glossPage',
@@ -25,4 +25,4 @@
             this.swithPane('GlossPane')
         }
     });
-})(jQuery,Backbone);
+})(jQuery,Backbone, _, app);

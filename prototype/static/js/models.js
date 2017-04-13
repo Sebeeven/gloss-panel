@@ -1,4 +1,4 @@
-(function($, Backbone) {
+(function($, Backbone, _, app) {
 
     var glossModel = Backbone.Model.extend({
         url: function() {
@@ -13,7 +13,7 @@
         },
     });
 
-    
+
 
     collection.fetch({
         success: function(collection, response, options) {
@@ -23,4 +23,4 @@
             alert('error!');
         }
     });
-})(jQuery, Backbone);
+})(jQuery, Backbone, _, app);
