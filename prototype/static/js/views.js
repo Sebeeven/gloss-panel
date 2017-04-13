@@ -1,3 +1,3 @@
-(function($, Backbone, _, app) {
-    
-})(jQuery, Backbone, _, app);
+(function($, Backbone, _) {
+
+})(jQuery, Backbone, _);

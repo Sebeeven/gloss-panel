@@ -12,7 +12,7 @@
         <title>List of the gloss</title>
     </head>
     <body>
-        
+
         <script class="template" type="template" id="layout">
             <h1>gloss list app</h1>
             <div id="links-pane">
@@ -22,10 +22,52 @@
             <div id="second-pane"></div>
         </script>
 
+        <script class="template" type="template" id="gloss-list-pane">
+            <h3>Gloss:</h3>
+            <ul>
+                <% gloss.each(function(gloss) { %>
+                    <li>
+                        <a href="#gloss/<%= gloss.id %>">
+                            <%= gloss.get('referenceNumber') %>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        </script>
+
+        <script class="template" type="template" id="gloss-pane">
+            <h3>Gloss details:</h3>
+            Reference Number:
+                <%= gloss.get('referenceNumber') %><br>
+            Date: <%= gloss.get('date') %><br>
+            Status: <%= gloss.get('status') %><br>
+            <br>
+            <a href="#gloss/<%= gloss.id %>/edit" class="btn">Edit</a>
+            <a href="#gloss/<%= gloss.id %>/delete" class="btn">Delete</a>
+        </script>
+
+        <script class="template" type="template" id="edit-gloss-pane">
+            <h3>Enter gloss details:</h3>
+            Reference Number:<br>
+            <input class="referenceNumber" type="text" value="<%= gloss.get('referenceNumber') %>"><br>
+            Date:<br>
+            <input class="date" type="text" value="<%= gloss.get('date') %>"><br>
+            Status:<br>
+            <input class="status" type="text" value="<%= gloss.get('status') %>"><br>
+            <button class="submit" type="button">Save</button>
+        </script>
+
+        <script class="template" type="template" id="delete-gloss-pane">
+            <h3>Are you sure you want to delete gloss <%= gloss.get('referenceNumber') %>?</h3>
+            <button class="submit" type="button">Yes</button>
+            <a href="#gloss/<%= gloss.id %>" class="btn">No</a>
+        </script>
+
         <!-- refer your own js here -->
-        <script type="text/javascript" src="static/js/config.js"></script>
+        <script type="text/javascript" src="static/js/main.js"></script>
+        <!-- <script type="text/javascript" src="static/js/app.js"></script>
         <script type="text/javascript" src="static/js/models.js"></script>
         <script type="text/javascript" src="static/js/views.js"></script>
-        <script type="text/javascript" src="static/js/router.js"></script>
+        <script type="text/javascript" src="static/js/router.js"></script> -->
     </body>
 </html>
