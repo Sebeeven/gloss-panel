@@ -1,8 +1,8 @@
 (function($) {
     var appConfig = {
         // database: 'mongodb://sebeeven:blogblog@ds060649.mlab.com:60649/blog-app',
-        "baseURL": 'https://api.mlab.com/api/1/databases/blog-app/collections/',
-        "addURL": '?apiKey=GenQuPLiVRTAa6FPh6Tx82DBikE_h7id'
+        baseURL: 'https://api.mlab.com/api/1/databases/blog-app/collections/',
+        addURL: '?apiKey=GenQuPLiVRTAa6FPh6Tx82DBikE_h7id'
     }
 
     // models
@@ -25,28 +25,45 @@
     });
 
     // views
+    var BaseLayout = Backbone.View.extend({
+        el: 'body',
+        template: _.template($('#layout').html()),
+        render: function() {
+            this.$el.html(this.template);
+            return this;
+        }
+    });
+
     var GlossListPane = Backbone.View.extend({
-        template: '#gloss-list-pane',
+        template: _.template($('#gloss-list-pane').html()),
         serialize: function() {
             return { gloss: _.chain(this.collection.models) };
         },
         initialize: function() {
             this.listenTo(this.collection, 'reset', this.render);
+        },
+        render: function() {
+            $(this.el).html(this.template);
+            return this;
         }
     });
 
     var GlossPane = Backbone.View.extend({
-        template: '#gloss-pane',
+        template: _.template($('#gloss-pane').html()),
         serialize: function() {
             return { gloss: this.model };
         },
         initialize: function() {
             this.listenTo(this.model, 'change', this.render);
+        },
+        render: function() {
+            $(this.el).html(this.template);
+            return this;
         }
     });
 
     var EditGlossPane = Backbone.View.extend({
-        template: '#edit-gloss-pane',
+        template: _.template($('#edit-gloss-pane').html()),
         serialize: function() {
             return {
                 gloss: _.isEmpty(this.model) ? new GlossModel() : this.model
@@ -71,11 +88,15 @@
             }else{
                 this.model.save(data, { success: success });
             }
+        },
+        render: function() {
+            $(this.el).html(this.template);
+            return this;
         }
     });
 
     var DeleteGlossPane = Backbone.View.extend({
-        template: '#delete-gloss-pane',
+        template: _.template($('#delete-gloss-pane').html()),
         serialize: function() {
             return { gloss: this.model };
         },
@@ -90,6 +111,10 @@
                     });
                 }
             });
+        },
+        render: function() {
+            $(this.el).html(this.template);
+            return this;
         }
     });
 
@@ -105,16 +130,18 @@
         },
         initialize: function() {
             this.collection = new GlossCollection();
-            this.layout = new Backbone.View({
-                el: 'body',
-                template: '#layout',
-                views: {
-                    '#first-pane': new GlossListPane({
-                        collection: this.collection
-                    }),
-                },
-            });
+            this.layout = new BaseLayout({collection: this.collection})
+            // this.layout = new Backbone.View({
+            //     el: 'body',
+            //     template: '#layout',
+            //     views: {
+            //         '#first-pane': new GlossListPane({
+            //             collection: this.collection
+            //         }),
+            //     },
+            // });
             this.layout.render();
+
         },
         glossPage: function(id) {
             this.switchPane('GlossPane', id);
